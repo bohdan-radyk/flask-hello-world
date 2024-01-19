@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function addClick() {
+            let name = document.getElementById("location_name").value;
+            let description = document.getElementById("location_description").value;
+            submitData(name, description)
+        }
+
+        function submitData(name, description) {
+            let url = "http://localhost:5000/submit-location?" +
+            "name=" + name +
+            "&description=" + description;  
+            fetch(url).then(response => response.json())
+            .then(function(data) {
+                window.location = "/";
+            })
+
+        }
+        
+    </script>
+</head>
+<body>
+<h1>Add Location</h1>
+<label>Name</label>
+<input type="text" id="location_name">
+<br>
+<label>Description</label>
+<input type="text" id="location_description">
+<br>
+<input type="button" value="Submit" onclick="addClick()"/>
+
+</body>
+</html>
+
