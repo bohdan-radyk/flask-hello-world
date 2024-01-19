@@ -24,37 +24,6 @@
             margin-top: 20px;
         }
     </style>
-    <script>
-        fetch('http://localhost:5000/locations')
-            .then(response => response.json())
-            .then(function(data) {
-                let tbody = document.getElementById("location-table");
-                for (let location of data) {
-                    let row = tbody.insertRow(-1);
-
-                    row.insertCell().appendChild(document.createTextNode(location["id"]));
-                    row.insertCell().appendChild(document.createTextNode(location["name"]))
-                    row.insertCell().appendChild(document.createTextNode(location["desc"]))
-                    row.insertCell().appendChild(document.createTextNode("Edit"))
-                    let deleteLink = document.createElement("a");
-                    deleteLink.href = "http://localhost:5000/delete/"+location["id"];
-                    deleteLink.appendChild(document.createTextNode("Delete"));
-                    row.insertCell().appendChild(deleteLink);
-
-                    // let td1 = document.createElement("td");
-                    // td1.appendChild(location["id"]);
-                    // tr.appendChild(td1);
-
-                    // let td2 = document.createElement("td");
-                    // td2.appendChild(location["name"]);
-                    // tr.appendChild(td2);
-
-                }
-                
-
-            });
-
-    </script>
 </head>
 <body>
 <h1>My Favourite Locations</h1>
@@ -72,8 +41,17 @@
         <th>Delete</th>
     </thead>
     <tbody id="location-table">
-
+        {% for location in locations %}
+            <tr>
+                <td>{{location.id}}</td>
+                <td>{{location.name}}</td>
+                <td>{{location.desc}}</td>
+                <td>Edit</td>
+                <td><a href="/delete/{{location.id}}">Delete</a></td>
+            </tr>
+        {% endfor %}
     </tbody>
+
 
 </table>
 

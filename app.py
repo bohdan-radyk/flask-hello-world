@@ -21,7 +21,7 @@ id = 2;
 
 @app.route('/')
 def hello_world():
-    return render_template("home.html")
+    return render_template("home.html", locations = locations)
 
 @app.route('/locations')
 def get_location():
@@ -38,18 +38,17 @@ def delete(id):
 def add_location():
     return render_template("add-location.html");
 
-@app.route("/submit-location")
+@app.route("/submit-location", methods=["POST", "GET"])
 def submit_location():
     global id
-    global locations
-    id = id + 1;
+    id = id + 1
     newLocation = {
         "id": id,
-        "name": request.args["name"],
-        "desc": request.args["description"]
+        "name": request.form["location_name"],
+        "desc": request.form["location_description"]
     };
     locations.append(newLocation);
-    return locations;
+    return redirect("/");
 
 
 if __name__ == "__main__":
