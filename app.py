@@ -32,11 +32,11 @@ safety_settings = [
   },
 ]
 
-model = genai.GenerativeModel(model_name="MyPromptModelName",
+model = genai.GenerativeModel(model_name="tunedModels/myprompt-7sr2mpttvexg",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-solutions = [];
+solutions = [{}];
 
 @app.route('/save-solution/<solution>')
 def save_solution(solution):
