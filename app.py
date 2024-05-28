@@ -40,7 +40,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash",
 def genai_prompt(prompt):
     response = model.generate_content(prompt)
     print(response.text)
-    return jsonify(response);
+    return jsonify(response.text);
 
 @app.route('/')
 def hello_world():
