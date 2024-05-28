@@ -4,7 +4,7 @@ from flask import jsonify, render_template
 import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
-genai.configure(api_key="AIzaSyCD0omNVZMMn1tVRtwgn0-x4dYsNQ8XLms")
+genai.configure(api_key="AIzaSyB-eHew6FQX9d1tVd-OITJ3_x2U2LJOzGE")
 
 generation_config = {
   "temperature": 1,
@@ -32,7 +32,7 @@ safety_settings = [
   },
 ]
 
-model = genai.GenerativeModel(model_name="gemini-1.5-flash",
+model = genai.GenerativeModel(model_name="MyPromptModelName",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
