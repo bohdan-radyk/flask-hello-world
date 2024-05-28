@@ -38,7 +38,7 @@ model = genai.GenerativeModel(model_name="tunedModels/qs-support-cdkuvhslbdjf",
 
 solutions = [];
 
-@app.route('save-solution/<solution>')
+@app.route('/save-solution/<solution>')
 def save_solution(solution):
     solutions.append(solution);
 
