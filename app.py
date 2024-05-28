@@ -89,7 +89,7 @@ prompt_parts = [
 def genai_prompt(prompt):
     response = model.generate_content(prompt)
     print(response.text)
-    return response.text;
+    return jsonify(response);
 
 @app.route('/')
 def hello_world():
