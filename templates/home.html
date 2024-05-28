@@ -4,78 +4,67 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .menu_div {
-            border: 1px solid black;
-            display: flex;
-            justify-content: space-around;
-            padding-top: 10px;
-            padding-bottom: 10px
-        }
-        th {
-            width: 100px;
-            text-align: center;
-        }
-        td {
-            text-align: center;   
-        }
-        table {
-            width: 80%;
-            margin-left: 10%;
-            margin-top: 20px;
-        }
+       #chat-history {
+        width: 95%;
+        height: 400px;
+       }
+       #prompt-input {
+        width: 80%
+       }
+       #prompt-send {
+        width: 15%
+       }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        fetch('http://localhost:5000/locations')
-            .then(response => response.json())
-            .then(function(data) {
-                let tbody = document.getElementById("location-table");
-                for (let location of data) {
-                    let row = tbody.insertRow(-1);
+        $( document ).ready(function() {
 
-                    row.insertCell().appendChild(document.createTextNode(location["id"]));
-                    row.insertCell().appendChild(document.createTextNode(location["name"]))
-                    row.insertCell().appendChild(document.createTextNode(location["desc"]))
-                    row.insertCell().appendChild(document.createTextNode("Edit"))
-                    let deleteLink = document.createElement("a");
-                    deleteLink.href = "http://localhost:5000/delete/"+location["id"];
-                    deleteLink.appendChild(document.createTextNode("Delete"));
-                    row.insertCell().appendChild(deleteLink);
+            var addMessage = function(text, sender) {
+                // var $tr = $("<tr></tr>");
+                // $tr.append("<td>" + sender + "</td>");
+                // $tr.append("<td><textarea>"+ text +"</textarea></td>");
 
-                    // let td1 = document.createElement("td");
-                    // td1.appendChild(location["id"]);
-                    // tr.appendChild(td1);
+                // $("#chat-history-table").append($tr);
+                var now = new Date().toLocaleTimeString();
+                $("#chat-history").append(now + " " + sender + ":\n");
+                $("#chat-history").append(text);
+                $("#chat-history").append("\n=============================================================================\n");
 
-                    // let td2 = document.createElement("td");
-                    // td2.appendChild(location["name"]);
-                    // tr.appendChild(td2);
+            }
 
-                }
-                
+            $("#prompt-send").click(function() {
+                var text = $("#prompt-input").val();
+                $("#prompt-input").val("");
+                addMessage(text, "Engineer");
+                $.ajax({
+                    url: "https://flask-hello-world-hk41.onrender.com/"+text, 
+                    success: function(result){
+                        addMessage(result, "AI Assistant");
+                    }
+                  });
 
-            });
-
+            })
+            
+        });
+    
     </script>
 </head>
 <body>
-<h1>My Favourite Locations</h1>
-<div class="menu_div">
-    <a class="menu-item" href=""/>Home</a>
-    <a class="menu-item" href="/add-location"/>Add Location</a>
-    <a class="menu-item" href=""/>About US</a>
-</div>
-<table>
+<h1>Інтелектуальна система підтримки</h1>
+<textarea id="chat-history"></textarea>
+<input type="text" id="prompt-input"/>
+<input type="button" id="prompt-send" value="Спитати"/>
+
+<!-- <table>
     <thead>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Sender</th>
+        <th>Message</th>
+        <th>Action</th>
     </thead>
-    <tbody id="location-table">
-
+    <tbody id="chat-history-table">
+        
     </tbody>
-
-</table>
+</table> -->
 
 </body>
 </html>
