@@ -43,7 +43,7 @@ def save_solution(solution):
     solutions.append(solution);
 
 @app.route('/solutions')
-def save_solution():
+def get_solutions():
     return jsonify(solutions);
 
 @app.route('/<prompt>')
