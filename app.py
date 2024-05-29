@@ -44,7 +44,7 @@ safety_settings = [
   },
 ]
 
-model = genai.GenerativeModel(model_name="tunedModels/myprompt-7sr2mpttvexg",
+model = genai.GenerativeModel(model_name="tunedModels/newmodel-bdt8syh85744",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
