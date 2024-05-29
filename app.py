@@ -7,7 +7,7 @@ CORS(app)
 from google_auth_oauthlib.flow import InstalledAppFlow
 SCOPES = ['https://www.googleapis.com/auth/generative-language.retriever']
 flow = InstalledAppFlow.from_client_secrets_file(
-                'client_secret.json', SCOPES)
+                '/etc/secrets/client_secret.json', SCOPES)
 creds = flow.run_local_server(port=0)
 genai.configure(credentials=creds)
 print('Available base models:', [m.name for m in genai.list_models()])
