@@ -1,10 +1,17 @@
 from flask_cors import CORS
-from flask import Flask, request,  redirect
-from flask import jsonify, render_template
+from flask import Flask, jsonify, render_template
 import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
-genai.configure(api_key="AIzaSyB-eHew6FQX9d1tVd-OITJ3_x2U2LJOzGE")
+
+from google_auth_oauthlib.flow import InstalledAppFlow
+SCOPES = ['https://www.googleapis.com/auth/generative-language.retriever']
+flow = InstalledAppFlow.from_client_secrets_file(
+                'client_secret.json', SCOPES)
+creds = flow.run_local_server(port=0)
+genai.configure(credentials=creds)
+print('Available base models:', [m.name for m in genai.list_models()])
+# genai.configure(api_key="AIzaSyB-eHew6FQX9d1tVd-OITJ3_x2U2LJOzGE")
 
 generation_config = {
   "temperature": 1,
@@ -35,6 +42,7 @@ safety_settings = [
 model = genai.GenerativeModel(model_name="tunedModels/myprompt-7sr2mpttvexg",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
+
 
 solutions = [{}];
 

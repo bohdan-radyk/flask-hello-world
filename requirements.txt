@@ -2,3 +2,4 @@ Flask
 Gunicorn
 google-generativeai
 flask_cors
+google-auth-oauthlib
