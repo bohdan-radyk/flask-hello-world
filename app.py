@@ -72,11 +72,11 @@ def delete_message():
         return 'Message removed successfully', 200
     return 'Invalid index', 400
 
-@app.route('/<prompt>')
-def genai_prompt(prompt):
-    response = model.generate_content(prompt)
-    print(response.text)
-    return jsonify(response.text);
+# @app.route('/<prompt>')
+# def genai_prompt(prompt):
+#     response = model.generate_content(prompt)
+#     print(response.text)
+#     return jsonify(response.text);
 
 @app.route('/')
 def hello_world():
