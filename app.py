@@ -51,7 +51,7 @@ def ask_question():
     return jsonify({'response': response_text}), 200
 
 def process_message(message):
-    response = model.generate_content(prompt)
+    response = model.generate_content(message)
     return response.text
 @app.route('/saveMessage', methods=['POST'])
 def save_message():
