@@ -2,69 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-       #chat-history {
-        width: 95%;
-        height: 400px;
-       }
-       #prompt-input {
-        width: 80%
-       }
-       #prompt-send {
-        width: 15%
-       }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $( document ).ready(function() {
-
-            var addMessage = function(text, sender) {
-                // var $tr = $("<tr></tr>");
-                // $tr.append("<td>" + sender + "</td>");
-                // $tr.append("<td><textarea>"+ text +"</textarea></td>");
-
-                // $("#chat-history-table").append($tr);
-                var now = new Date().toLocaleTimeString();
-                $("#chat-history").append(now + " " + sender + ":\n");
-                $("#chat-history").append(text);
-                $("#chat-history").append("\n=============================================================================\n");
-
-            }
-
-            $("#prompt-send").click(function() {
-                var text = $("#prompt-input").val();
-                $("#prompt-input").val("");
-                addMessage(text, "Engineer");
-                $.ajax({
-                    url: "https://flask-hello-world-hk41.onrender.com/"+text, 
-                    success: function(result){
-                        addMessage(result, "AI Assistant");
-                    }
-                  });
-
-            })
-            
-        });
-    
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Chat Interface</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Інтелектуальна система підтримки</h1>
-<textarea id="chat-history"></textarea>
-<input type="text" id="prompt-input"/>
-<input type="button" id="prompt-send" value="Спитати"/>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Інтелектуальна система підтримки інженерів телекомунікацій</h2>
+            <button id="showKnowledgeBaseButton">База рішень</button>
+        </div>
+        <div class="chat-window" id="chatWindow">
+            <!-- Messages will be appended here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Напишіть ваше повідомлення..." />
+            <button id="sendButton">Спитати</button>
+        </div>
+    </div>
+    
+    <div id="knowledgeBaseContainer" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>База рішень</h2>
+            <table id="knowledgeBaseTable">
+                <thead>
+                    <tr>
+                        <th>Відправник</th>
+                        <th>Імя</th>
+                        <th>Рішення</th>
+                        <th>Час</th>
+                        <th>Операції</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Saved messages will be appended here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<!-- <table>
-    <thead>
-        <th>Sender</th>
-        <th>Message</th>
-        <th>Action</th>
-    </thead>
-    <tbody id="chat-history-table">
-        
-    </tbody>
-</table> -->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
