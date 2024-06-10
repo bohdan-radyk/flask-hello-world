@@ -1,22 +1,15 @@
 from flask_cors import CORS
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
 
-from google_auth_oauthlib.flow import InstalledAppFlow
 SCOPES = ['https://www.googleapis.com/auth/generative-language.retriever']
-# flow = InstalledAppFlow.from_client_secrets_file(
-#                 'client_secret.json', SCOPES) #/etc/secrets/
-# creds = flow.run_local_server(port=0)
-# with open('token.json', 'w') as token:
-#     token.write(creds.to_json())
 
 from google.oauth2.credentials import Credentials
 creds = Credentials.from_authorized_user_file('/etc/secrets/token.json', SCOPES)
 genai.configure(credentials=creds)
 print('Available base models:', [m.name for m in genai.list_models()])
-# genai.configure(api_key="AIzaSyB-eHew6FQX9d1tVd-OITJ3_x2U2LJOzGE")
 
 generation_config = {
   "temperature": 1,
@@ -49,15 +42,35 @@ model = genai.GenerativeModel(model_name="tunedModels/newmodel-bdt8syh85744",
                               safety_settings=safety_settings)
 
 
-solutions = [{}];
+messages = []
 
-@app.route('/save-solution/<solution>')
-def save_solution(solution):
-    solutions.append(solution);
+@app.route('/askQuestion', methods=['POST'])
+def ask_question():
+    message = request.get_json()
+    response_text = process_message(message)
+    return jsonify({'response': response_text}), 200
 
-@app.route('/solutions')
-def get_solutions():
-    return jsonify(solutions);
+def process_message(message):
+    response = model.generate_content(prompt)
+    return response.text
+@app.route('/saveMessage', methods=['POST'])
+def save_message():
+    message = request.get_json()
+    messages.append(message)
+    return 'Message saved successfully', 200
+
+@app.route('/getMessages', methods=['GET'])
+def get_messages():
+    return jsonify(messages), 200
+
+@app.route('/deleteMessage', methods=['POST'])
+def delete_message():
+    data = request.get_json()
+    index = data.get('index')
+    if index is not None and 0 <= index < len(messages):
+        messages.pop(index)
+        return 'Message removed successfully', 200
+    return 'Invalid index', 400
 
 @app.route('/<prompt>')
 def genai_prompt(prompt):
