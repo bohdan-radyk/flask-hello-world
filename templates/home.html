@@ -309,7 +309,7 @@
         var imgElement = $('<img>').attr('src', photo);
         var contentElement = $('<div></div>').addClass('message-content');
         var infoElement = $('<div></div>').addClass('message-info').html('<span>' + name + '</span><span>' + time + '</span>');
-        var textElement = $('<div></div>').text(message);
+        var textElement = $('<div></div>').innerHTML(message);
         var likeButton = $('<button></button>').addClass('like-button').text('Зберегти в базу рішень').click(function() {
             var messageObj = { sender: sender, name: name, message: message, time: time };
             likedMessages.push(messageObj);
