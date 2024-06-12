@@ -43,7 +43,8 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(message),
             success: function(response) {
-                appendMessage('bot', 'AI Асистент', 'bot.jpg', response.response);
+                var message = response.response.replace(" * ", "<br>").replace(/\*\*(.*?)\*\*/g, '<br><strong>$1</strong>');
+                appendMessage('bot', 'AI Асистент', 'bot.jpg', message);
             },
             error: function(error) {
                 alert('Error saving message:', error);
