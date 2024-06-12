@@ -22,7 +22,7 @@ $(document).ready(function() {
     function sendMessage() {
         var message = $('#messageInput').val();
         if (message.trim() !== '') {
-            appendMessage('user', 'Анастасія', 'engineer.jpg', message);
+            appendMessage('user', 'Анастасія', 'static/user.png', message);
             $('#messageInput').val('');
             askQuestion(message);
              // $.ajax({
@@ -44,7 +44,7 @@ $(document).ready(function() {
             data: JSON.stringify(message),
             success: function(response) {
                 var message = response.response.replace(" * ", "<br>").replace(/\*\*(.*?)\*\*/g, '<br><strong>$1</strong>');
-                appendMessage('bot', 'AI Асистент', 'bot.jpg', message);
+                appendMessage('bot', 'AI Асистент', 'static/bot.jpg', message);
             },
             error: function(error) {
                 alert('Error saving message:', error);
@@ -59,7 +59,7 @@ $(document).ready(function() {
         var imgElement = $('<img>').attr('src', photo);
         var contentElement = $('<div></div>').addClass('message-content');
         var infoElement = $('<div></div>').addClass('message-info').html('<span>' + name + '</span><span>' + time + '</span>');
-        var textElement = $('<div></div>').text(message);
+        var textElement = $('<div>'+message+'</div>');
         var likeButton = $('<button></button>').addClass('like-button').text('Зберегти в базу рішень').click(function() {
             var messageObj = { sender: sender, name: name, message: message, time: time };
             likedMessages.push(messageObj);

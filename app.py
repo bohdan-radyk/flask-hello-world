@@ -1,7 +1,7 @@
 from flask_cors import CORS
 from flask import Flask, jsonify, render_template, request
 import google.generativeai as genai
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
 SCOPES = ['https://www.googleapis.com/auth/generative-language.retriever']
